@@ -38,7 +38,7 @@ python main.py
 - Haz clic en "Play" para iniciar Minecraft con Forge.
 
 ## Cambiar la versión de Minecraft o Forge
-Para cambiar la versión de Minecraft o Forge, edita las siguientes líneas en `main.py`:
+Para cambiar la versión de Minecraft o Forge, edita las siguientes líneas en `config/__init__.py`:
 
 ```
 # Minecraft and Forge configuration
