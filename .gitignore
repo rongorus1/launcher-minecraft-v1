@@ -3,3 +3,4 @@ build/
 .idea/
 main.spec
 launcher.log
+__pycache__/
