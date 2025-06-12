@@ -41,18 +41,18 @@ class MainWindow(ctk.CTk):
         
         self.play_button = ButtonPlay(
             self,
-            command=open_window_configurar_ram,
+            command=lambda: open_window_configurar_ram(master=self),
             is_center=True
         )
         self.login_button = ButtonLogin(
             self,
-            command=run_session_controller,
+            command=lambda: run_session_controller(master=self),
             relx=0.05,
             rely=0.05
         )
         self.ram_settings_button = ButtonRamSetting(
             self,
-            command=open_window_configurar_ram,
+            command=lambda: open_window_configurar_ram(master=self),
             relx=0.05,
             rely=0.15
         )

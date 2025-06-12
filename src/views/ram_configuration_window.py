@@ -42,6 +42,8 @@ class RamConfigurationWindow(ctk.CTkToplevel):
 
                 # Cerrar ventana y ejecutar Minecraft
                 self.destroy()
+                if self.master is not None:
+                    self.master.close()
                 minecraft_controller = MinecraftController(self)
                 minecraft_controller.ejecutar_minecraft(self)
 
