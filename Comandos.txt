@@ -1,0 +1,6 @@
+pip install minecraft-launcher-lib
+pip install customtkinter
+pip install pillow
+pip install requests
+pip install pyinstaller
+pyinstaller --onefile --noconsole --icon=Launcher.ico main.py
