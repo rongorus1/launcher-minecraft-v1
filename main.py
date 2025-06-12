@@ -492,7 +492,7 @@ def ejecutar_minecraft():
         if app is not None:
             app.destroy()
         if platform.system() == "Windows":
-            subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY, creationflags=subprocess.CREATE_NO_WINDOW | subprocess.DETACHED_PROCESS)
+            subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY, creationflags=subprocess.CREATE_NO_WINDOW)
         elif platform.system() == "Linux":
             subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY)
         else:  # macOS
@@ -506,7 +506,7 @@ def ejecutar_minecraft():
 def abrir_ventana_principal():
     global app
     app = ctk.CTk()
-    app.title("Hardson Launcher")
+    app.title("RPLauncher")
     app.geometry("1200x700")
 
     # Imagen de fondo original
