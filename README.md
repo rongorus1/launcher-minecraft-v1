@@ -26,6 +26,22 @@ En Ubuntu/Debian:
 sudo apt-get install python3-tk
 ```
 
+## Dependencias para extracción de archivos RAR
+Para que la función de extracción de archivos RAR funcione correctamente, asegúrate de tener instalada la librería Python `rarfile` (ya incluida en requirements.txt) y el programa `unrar` en tu sistema:
+
+- **En Arch Linux:**
+  ```sh
+  sudo pacman -S unrar
+  ```
+- **En Ubuntu/Debian:**
+  ```sh
+  sudo apt-get install unrar
+  ```
+- **En Windows:**
+  Descarga e instala [UnRAR para Windows](https://www.rarlab.com/rar_add.htm) y asegúrate de que el ejecutable `unrar.exe` esté en tu PATH.
+
+La librería `rarfile` utiliza `unrar` para descomprimir archivos RAR.
+
 ## Uso
 Ejecuta el lanzador con:
 

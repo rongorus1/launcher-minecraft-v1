@@ -5,14 +5,19 @@ from PIL import Image, ImageTk
 from components.button_login import ButtonLogin
 from components.button_play import ButtonPlay
 from components.button_ram_setting import ButtonRamSetting
+from components.button_update_mods import ButtonUpdateMods
+from components.progress_bar_generic import ProgressBarGeneric
 from controller.ram_window_controller import open_window_configurar_ram
 from controller.start_session_controller import run_session_controller
+from controller.update_mods_controller import run_update_mods_controller
 
 
 class MainWindow(ctk.CTk):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.progressbar = None
+        self.update_mods_button = None
         self.login_button = None
         self.ram_settings_button = None
         self.play_button = None
@@ -38,7 +43,7 @@ class MainWindow(ctk.CTk):
 
     # Add components
     def load_components(self):
-        
+
         self.play_button = ButtonPlay(
             self,
             command=lambda: open_window_configurar_ram(master=self),
@@ -56,6 +61,16 @@ class MainWindow(ctk.CTk):
             relx=0.05,
             rely=0.15
         )
+
+        self.progressbar = ProgressBarGeneric(self)
+
+        self.update_mods_button = ButtonUpdateMods(
+            self,
+            command = lambda: run_update_mods_controller(self.progressbar),
+            relx=0.05,
+            rely=0.25
+        )
+
 
     def run(self):
         self.mainloop()
