@@ -506,7 +506,7 @@ def ejecutar_minecraft():
 def abrir_ventana_principal():
     global app
     app = ctk.CTk()
-    app.title("Hardson Launcher")
+    app.title("RPLauncher")
     app.geometry("1200x700")
 
     # Imagen de fondo original
