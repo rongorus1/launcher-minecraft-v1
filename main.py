@@ -456,10 +456,10 @@ def ejecutar_minecraft():
         options = {
             "username": profile_names[0] if profile_names else "Guess",  # Reemplazar por el nombre de usuario real
             "token": "",  # Reemplazar por el token real
-            "uuid": None,  # Opcional: agrega UUID si es necesario
+            "uuid": "",  # Opcional: agrega UUID si es necesario
             "gameDirectory": MINECRAFT_DIRECTORY,
             "java": java_path,
-            "jvmArguments": f"-Xmx{settings['ram']['max']} -Xms{settings['ram']['min']}",
+            "jvmArguments": [f"-Xmx{settings['ram']['max']}", f"-Xms{settings['ram']['min']}"] ,
             "launcherName": "RPLauncher",
             "customResolution": True,
             "resolutionHeight": "480",
