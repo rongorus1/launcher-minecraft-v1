@@ -1,0 +1,5 @@
+minecraft-launcher-lib
+customtkinter
+pillow
+requests
+pyinstaller
