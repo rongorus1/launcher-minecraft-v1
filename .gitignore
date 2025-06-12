@@ -1,4 +1,5 @@
 dist/
 build/
+.idea/
 main.spec
 launcher.log
