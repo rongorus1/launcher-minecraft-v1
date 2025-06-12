@@ -52,7 +52,7 @@ Reemplaza los valores por la versión de Minecraft y Forge que desees usar. Guar
 Puedes crear un ejecutable usando PyInstaller. Ejecuta:
 
 ```sh
-pyinstaller --onefile --noconsole --icon=Launcher.ico main.py
+pyinstaller --onefile --noconsole --icon=Launcher.ico --add-data 'src/assets:assets' src/main.py
 ```
 
 Esto generará un archivo ejecutable en la carpeta `dist/`.
