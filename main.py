@@ -108,6 +108,7 @@ def detectar_java():
         rutas_java = {
             "Windows": [
                 os.path.join(ruta_java_fija, "bin", "java.exe"),  # Ruta del launcher
+                os.path.join(ruta_java_fija, "jdk-17.0.2", "bin", "java.exe"),  # Ruta del launcher
                 r"C:\Program Files\Java\jdk-17\bin\java.exe",     # Ruta de instalación común
                 r"C:\Program Files (x86)\Java\jdk-17\bin\java.exe"  # Ruta alternativa
             ],
@@ -117,6 +118,7 @@ def detectar_java():
             ],
             "Linux": [
                 os.path.join(ruta_java_fija, "bin", "java"),
+                os.path.join(ruta_java_fija, "jdk-17.0.2", "bin", "java"),
                 "/usr/lib/jvm/java-17-openjdk-amd64/bin/java",
                 "/usr/lib/jvm/java-17/bin/java"
             ]
@@ -179,8 +181,8 @@ def get_resource_path(filename):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
 # Minecraft and Forge configuration
-MINECRAFT_VERSION = "1.20.1"
-FORGE_VERSION = "47.3.0"
+MINECRAFT_VERSION = "1.18.2"
+FORGE_VERSION = "40.3.0"
 
 # Configuration file paths
 PROFILES_CONFIG_PATH = os.path.join(MINECRAFT_DIRECTORY, "rp_profiles.json")
@@ -243,7 +245,7 @@ def validate_ram(min_ram, max_ram):
         min_val = int(re.findall(r'\d+', min_ram)[0])
         max_val = int(re.findall(r'\d+', max_ram)[0])
         
-        if min_val < 4 or max_val > 10:
+        if min_val < 2 or max_val > 10:
             raise ValueError("RAM must be between 4G and 10G")
         
         if min_val >= max_val:
@@ -422,6 +424,14 @@ def obtener_auth_data():
     }
     return auth_data
 
+def minecraft_set_status(text: str):
+    logging.info(text)
+
+def minecraft_set_progress(value: int):
+    logging.info(value)
+
+def minecraft_set_max(value: int):
+    logging.info(value)
 
 def ejecutar_minecraft():
     try:
@@ -440,14 +450,40 @@ def ejecutar_minecraft():
             messagebox.showerror("Error", "No se encontraron datos de autenticación")
             return
 
+        data_profile = load_profiles()
+        profile_names = [p['username'] for p in data_profile['profiles']]
+
         options = {
-            "game_directory": MINECRAFT_DIRECTORY,
+            "username": profile_names[0] if profile_names else "Guess",  # Reemplazar por el nombre de usuario real
+            "token": "",  # Reemplazar por el token real
+            "uuid": None,  # Opcional: agrega UUID si es necesario
+            "gameDirectory": MINECRAFT_DIRECTORY,
             "java": java_path,
-            "jvm_arguments": f"-Xmx{settings['ram']['max']} -Xms{settings['ram']['min']}"
+            "jvmArguments": f"-Xmx{settings['ram']['max']} -Xms{settings['ram']['min']}",
+            "launcherName": "RPLauncher",
+            "customResolution": True,
+            "resolutionHeight": "480",
+            "resolutionWidth": "854",
+            "launcherVersion": "1.0",
         }
 
+        if not minecraft_launcher_lib.utils.is_minecraft_installed(MINECRAFT_DIRECTORY):
+            logging.info("Minecraft no está instalado. Instalando Forge...")
+            
+            if not os.path.exists(os.path.join(MINECRAFT_DIRECTORY, "versions", MINECRAFT_VERSION)):
+                logging.info("Descargando versión de Minecraft...")
+                minecraft_launcher_lib.install.install_minecraft_version(
+                    MINECRAFT_VERSION, MINECRAFT_DIRECTORY, callback={'setStatus': minecraft_set_status, 'setProgress': minecraft_set_progress, 'setMax': minecraft_set_max}
+                    )
+
+            if not os.path.exists(os.path.join(MINECRAFT_DIRECTORY, "versions", forge_profile)):
+                logging.info("Descargando Forge...")
+                minecraft_launcher_lib.forge.install_forge_version(
+                    f"{MINECRAFT_VERSION}-{FORGE_VERSION}" , MINECRAFT_DIRECTORY, callback={'setStatus': minecraft_set_status, 'setProgress': minecraft_set_progress, 'setMax': minecraft_set_max}
+                )
+
         command = minecraft_launcher_lib.command.get_minecraft_command(
-            forge_profile, MINECRAFT_DIRECTORY, auth_data
+            forge_profile, MINECRAFT_DIRECTORY, options
         )
 
         logging.info(f"Iniciando Minecraft: {command}")
@@ -455,8 +491,12 @@ def ejecutar_minecraft():
         global app
         if app is not None:
             app.destroy()
-
-        subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY, creationflags=subprocess.CREATE_NO_WINDOW)
+        if platform.system() == "Windows":
+            subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY, creationflags=subprocess.CREATE_NO_WINDOW | subprocess.DETACHED_PROCESS)
+        elif platform.system() == "Linux":
+            subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY)
+        else:  # macOS
+            subprocess.Popen(command, cwd=MINECRAFT_DIRECTORY)
     
     except Exception as e:
         logging.error(f"Error al iniciar Minecraft: {e}")
