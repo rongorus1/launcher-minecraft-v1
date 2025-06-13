@@ -16,13 +16,13 @@ class MainWindow(ctk.CTk):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.progressbar = None
+        self.progressbar: ProgressBarGeneric = None
         self.update_mods_button = None
         self.login_button = None
         self.ram_settings_button = None
         self.play_button = None
 
-        self.title("RPLauncher")
+        self.title("Rongocraft Launcher")
         self.geometry("1200x700")
 
         # Load and set background image
@@ -38,15 +38,19 @@ class MainWindow(ctk.CTk):
                 self.bg_label = ctk.CTkLabel(self, image=self.bg_image, text="")
                 self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
+        self.bind("<Configure>", self.resize_bg)
+
         # Load components
         self.load_components()
 
     # Add components
     def load_components(self):
 
+        self.progressbar = ProgressBarGeneric(self)
+
         self.play_button = ButtonPlay(
             self,
-            command=lambda: open_window_configurar_ram(master=self),
+            command=lambda: open_window_configurar_ram(master=self, progressbar = self.progressbar),
             is_center=True
         )
         self.login_button = ButtonLogin(
@@ -57,12 +61,10 @@ class MainWindow(ctk.CTk):
         )
         self.ram_settings_button = ButtonRamSetting(
             self,
-            command=lambda: open_window_configurar_ram(master=self),
+            command=lambda: open_window_configurar_ram(master=self, progressbar = self.progressbar),
             relx=0.05,
             rely=0.15
         )
-
-        self.progressbar = ProgressBarGeneric(self)
 
         self.update_mods_button = ButtonUpdateMods(
             self,
@@ -70,6 +72,14 @@ class MainWindow(ctk.CTk):
             relx=0.05,
             rely=0.25
         )
+
+    def resize_bg(self, event):
+        if self.bg_image is not None:
+            self.bg_image._size = (event.width, event.height)
+            self.bg_label.configure(image=self.bg_image)
+
+        if self.progressbar is not None:
+            self.progressbar.update_width(event.width)
 
 
     def run(self):
