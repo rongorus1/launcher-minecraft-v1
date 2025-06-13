@@ -11,7 +11,7 @@ Rongocraft Launcher es un lanzador personalizado para Minecraft con soporte para
 Instala las dependencias necesarias ejecutando:
 
 ```sh
-pip install -r requirements.txt
+pip install -r src/requirements.txt
 ```
 
 En sistemas basados en Arch Linux, instala también el paquete de Tkinter:
@@ -68,7 +68,7 @@ Reemplaza los valores por la versión de Minecraft y Forge que desees usar. Guar
 Puedes crear un ejecutable usando PyInstaller. Ejecuta:
 
 ```sh
-pyinstaller --onefile --noconsole --icon=Launcher.ico --add-data 'src/assets:assets' --hidden-import=PIL._tkinter_finder --hidden-import=PIL.ImageTk src/main.py
+pyinstaller --onefile --noconsole --icon=Launcher.ico --add-data "src/assets:assets" --hidden-import=PIL._tkinter_finder --hidden-import=PIL.ImageTk src/main.py
 ```
 
 Esto generará un archivo ejecutable en la carpeta `dist/`.
