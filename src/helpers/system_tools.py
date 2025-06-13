@@ -8,11 +8,11 @@ def get_launcher_directory():
     """Get a cross-platform launcher directory"""
     try:
         if platform.system() == "Windows":
-            base_dir = os.path.join(os.path.expanduser("~"), "Desktop", "RPLauncher")
+            base_dir = os.path.join(os.path.expanduser("~"), "Desktop", "RongocraftLauncher")
         elif platform.system() == "Darwin":  # macOS
-            base_dir = os.path.join(os.path.expanduser("~"), "Desktop", "RPLauncher")
+            base_dir = os.path.join(os.path.expanduser("~"), "Desktop", "RongocraftLauncher")
         else:  # Linux and other systems
-            base_dir = os.path.join(os.path.expanduser("~"), "RPLauncher")
+            base_dir = os.path.join(os.path.expanduser("~"), "RongocraftLauncher")
 
         # Ensure the directory exists
         os.makedirs(base_dir, exist_ok=True)

@@ -1,6 +1,6 @@
-# RPLauncher
+# Rongocraft Launcher
 
-RPLauncher es un lanzador personalizado para Minecraft con soporte para Forge, perfiles de usuario y configuración de memoria RAM. Permite instalar y ejecutar Minecraft fácilmente, así como empaquetar la aplicación como ejecutable.
+Rongocraft Launcher es un lanzador personalizado para Minecraft con soporte para Forge, perfiles de usuario y configuración de memoria RAM. Permite instalar y ejecutar Minecraft fácilmente, así como empaquetar la aplicación como ejecutable.
 
 ## Requisitos
 - Python 3.8 o superior

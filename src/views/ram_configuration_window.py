@@ -3,12 +3,13 @@ from tkinter import messagebox
 import customtkinter as ctk
 
 from components.button_save import ButtonSave
+from components.progress_bar_generic import ProgressBarGeneric
 from controller.minecraft_controller import MinecraftController
 from services.settings_service import load_settings, save_settings
 
 
 class RamConfigurationWindow(ctk.CTkToplevel):
-    def __init__(self, master, *args, **kwargs):
+    def __init__(self, master: ctk.CTk = None, progress_bar: ProgressBarGeneric = None, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
         self.title("Configuración de RAM para Minecraft")
         self.geometry("400x250")
@@ -42,9 +43,7 @@ class RamConfigurationWindow(ctk.CTkToplevel):
 
                 # Cerrar ventana y ejecutar Minecraft
                 self.destroy()
-                if self.master is not None:
-                    self.master.close()
-                minecraft_controller = MinecraftController(self)
+                minecraft_controller = MinecraftController(root_window = None if master is None else master, progress_bar = progress_bar)
                 minecraft_controller.ejecutar_minecraft(self)
 
             except ValueError:

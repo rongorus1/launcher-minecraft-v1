@@ -7,8 +7,12 @@ class ProgressBarGeneric(CTkProgressBar):
         self.set(0)
         self.configure(
             fg_color = ("black", "black"),
-            width=1200
+            width=1200,
+            progress_color = ("green", "green")
         )
+
+    def update_width(self, width):
+        self.configure(width=width)
 
     def show_element(self):
         self.place(
