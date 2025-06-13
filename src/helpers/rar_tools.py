@@ -15,10 +15,10 @@ def extract_rar_file(rar_path: str, extract_dir: str, progress_bar: ProgressBarG
     Devuelve None si todo va bien, o un mensaje de error si falla.
     """
     config_logging()
-    logging = logging.getLogger()
+    logger = logging.getLogger()
 
     if not os.path.isfile(rar_path):
-        logging.error(f"El archivo RAR no existe: {rar_path}")
+        logger.error(f"El archivo RAR no existe: {rar_path}")
         return f"El archivo RAR no existe: {rar_path}"
     if not os.path.isdir(extract_dir):
         os.makedirs(extract_dir, exist_ok=True)
@@ -34,9 +34,9 @@ def extract_rar_file(rar_path: str, extract_dir: str, progress_bar: ProgressBarG
                     progress_bar.set(idx / total)
                     progress_bar.update_idletasks()
     except rarfile.RarCannotExec as e:
-        logging.error("No se encontró 'unrar' en el sistema. Instálalo para poder extraer archivos RAR.")
+        logger.error("No se encontró 'unrar' en el sistema. Instálalo para poder extraer archivos RAR.")
         return "No se encontró 'unrar' en el sistema. Instálalo para poder extraer archivos RAR."
     except Exception as e:
-        logging.error(f"Excepción al extraer el archivo RAR: {e}")
+        logger.error(f"Excepción al extraer el archivo RAR: {e}")
         return f"Excepción al extraer: {e}"
     return None
