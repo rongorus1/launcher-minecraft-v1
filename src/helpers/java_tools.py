@@ -95,9 +95,9 @@ def detectar_java():
         # Si no se encuentra, intentar descargar
         if descargar_java_17():
             # Verificar nuevamente después de la descarga
-            java_path = os.path.join(ruta_java_fija, "bin", "java.exe" if sistema_actual == "Windows" else "java")
-            if os.path.exists(java_path):
-                return java_path
+            for path in rutas_java.get(sistema_actual, []):
+                if os.path.exists(path):
+                    return path
 
         # Si todo falla
         messagebox.showerror("Error de Java",
