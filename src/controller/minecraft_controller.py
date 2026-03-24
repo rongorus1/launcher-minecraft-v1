@@ -72,7 +72,7 @@ class MinecraftController:
                     "gameDirectory": MINECRAFT_DIRECTORY,
                     "java": java_path,
                     "jvmArguments": [f"-Xmx{settings['ram']['max']}", f"-Xms{settings['ram']['min']}"],
-                    "launcherName": "RPLauncher",
+                    "launcherName": "RongoCraft Launcher",
                     "customResolution": True,
                     "resolutionHeight": "480",
                     "resolutionWidth": "854",
